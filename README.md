@@ -29,7 +29,7 @@ A parking spot tracker built with [Expo](https://expo.dev/).
 
 - Prefer types over interfaces whereever possible.
 - Prefer <code>const</code> over <code>let</code> and <code>let</code> over <code>var</code>.
-- Prefer arrow functions.
+- Prefer es5 function for components, arrow functions for all others.
 - Prefer functional React components with hooks over class React components.
 
 ## Notable Contributors
