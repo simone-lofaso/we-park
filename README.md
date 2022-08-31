@@ -38,3 +38,7 @@ A parking spot tracker built with [Expo](https://expo.dev/).
 - Rafa Padilla (Software Engineer)
 - Polus Gorgees (Software Engineer)
 - Logan Dang (Software Engineer)
+
+## Important Links
+- [Figma](https://www.figma.com/file/u9Appt46M0BBispTLVQnxB/WePark?node-id=0%3A1)
+- [Trello](https://trello.com/b/cJrzfF7D/wepark)
