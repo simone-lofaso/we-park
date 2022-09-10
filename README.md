@@ -1,6 +1,6 @@
 # We Park
 
-A parking spot tracker built with [Expo](https://expo.dev/).
+A parking spot tracker built with [Expo](https://expo.dev/) and [Express](https://expressjs.com/).
 
 ## Table of Contents
 
@@ -40,5 +40,6 @@ A parking spot tracker built with [Expo](https://expo.dev/).
 - Logan Dang (Software Engineer)
 
 ## Important Links
+
 - [Figma](https://www.figma.com/file/u9Appt46M0BBispTLVQnxB/WePark?node-id=0%3A1)
 - [Trello](https://trello.com/b/cJrzfF7D/wepark)
