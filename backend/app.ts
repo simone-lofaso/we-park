@@ -1,7 +1,7 @@
-import * as dotenv from 'dotenv' 
-dotenv.config()
+import * as dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
-import {db} from './database'
+import { db } from './database';
 
 db;
 const port = 8000;
