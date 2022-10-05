@@ -3,6 +3,10 @@ import { Input, Submit } from '../components';
 import { RootStackScreenProps } from '../types';
 import NorthGarage from '../assets/images/north-garage.jpg';
 import { useState } from 'react';
+import Constants from 'expo-constants';
+
+const { manifest } = Constants;
+const uri = `http://${manifest?.debuggerHost?.split(':').shift()}:8000`;
 
 type FormState = {
   email: string;
@@ -29,7 +33,22 @@ export default function Register({
           placeholder='password'
           onChangeText={(e) => setForm({ ...form, password: e })}
         />
-        <Submit />
+        <Submit
+          onPress={async () => {
+            const res = await fetch(
+              `https://common-sites-tell-130-65-254-14.loca.lt/api/v1/user/register`,
+              {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+              }
+            );
+            console.log(res.status);
+          }}
+        />
       </ImageBackground>
     </SafeAreaView>
   );
