@@ -35,8 +35,10 @@ export default function Register({
         />
         <Submit
           onPress={async () => {
+            try{
+              console.log(form);
             const res = await fetch(
-              `https://common-sites-tell-130-65-254-14.loca.lt/api/v1/user/register`,
+              `http://172.20.10.3:8000/api/v1/user/register`,
               {
                 method: 'POST',
                 headers: {
@@ -46,7 +48,9 @@ export default function Register({
                 body: JSON.stringify(form),
               }
             );
-            console.log(res.status);
+            }
+            catch(e){console.log(e)}
+            //console.log(res.status);
           }}
         />
       </ImageBackground>

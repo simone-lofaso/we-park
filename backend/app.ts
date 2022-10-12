@@ -17,6 +17,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello World!' });
 });
 
-app.listen(port, () => {
+app.listen(port, process.env.IPHOST || "localhost" , () => {
   console.log(`Listening on port: ${[port]}`);
 });
