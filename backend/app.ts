@@ -4,7 +4,7 @@ import express from 'express';
 import { db } from './database';
 import UserRouter from './routes/user';
 
-db;
+console.log(`IPHOST: ${process.env.IPHOST}`);
 const port = 8000;
 const app = express();
 app.use(express.json());
