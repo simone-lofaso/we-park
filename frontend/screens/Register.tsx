@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, SafeAreaView, Text } from 'react-native';
-import { Input, Submit } from '../components';
+import { Input } from '@rneui/themed';
 import { RootStackScreenProps } from '../types';
 import NorthGarage from '../assets/images/north-garage.jpg';
 import { useState } from 'react';
