@@ -2,6 +2,8 @@ import { Router } from 'express';
 const router = Router();
 import { db } from '../database';
 
+
+
 router.post('/register', (req, res) => {
   try {
     console.log(req.body);
