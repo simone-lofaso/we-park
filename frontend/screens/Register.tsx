@@ -39,7 +39,7 @@ export default function Register({
             try {
               console.log(form);
               const res = await fetch(
-                'http://172.19.144.1:8000/api/v1/user/register',
+                'http://172.20.10.3:8000/api/v1/user/register',
                 {
                   method: 'POST',
                   headers: {
