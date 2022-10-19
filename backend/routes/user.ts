@@ -9,7 +9,8 @@ router.post('/register', (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
     db.query(
-      `INSERT INTO users(email, password, tokens) values('${email}','${password}',3);`
+      `INSERT INTO users(email, password, tokens) values('${email}','${password}',3);`,
+      (result) => console.log(result)
     );
     res.status(200).end();
   } catch (e) {

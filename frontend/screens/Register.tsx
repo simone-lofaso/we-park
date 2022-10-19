@@ -1,12 +1,8 @@
-import { ImageBackground, StyleSheet, SafeAreaView, Text } from 'react-native';
-import { Input, Submit } from '../components';
+import { ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
+import { Input, Button, Text } from '@rneui/themed';
 import { RootStackScreenProps } from '../types';
 import NorthGarage from '../assets/images/north-garage.jpg';
 import { useState } from 'react';
-import Constants from 'expo-constants';
-
-const { manifest } = Constants;
-const uri = `http://${manifest?.debuggerHost?.split(':').shift()}:8000`;
 
 type FormState = {
   email: string;
@@ -26,19 +22,24 @@ export default function Register({
       <ImageBackground source={NorthGarage} style={styles.picture}>
         <Text style={styles.register}>Register</Text>
         <Input
-          placeholder='email'
+          placeholder='Email'
           onChangeText={(e) => setForm({ ...form, email: e })}
+          inputStyle={styles.input}
+          placeholderTextColor='white'
         />
         <Input
-          placeholder='password'
+          placeholder='Password'
           onChangeText={(e) => setForm({ ...form, password: e })}
+          inputStyle={styles.input}
+          placeholderTextColor='white'
         />
-        <Submit
+        <Button
+          title='Submit'
           onPress={async () => {
             try {
               console.log(form);
               const res = await fetch(
-                `http://172.20.10.3:8000/api/v1/user/register`,
+                'http://172.20.10.3:8000/api/v1/user/register',
                 {
                   method: 'POST',
                   headers: {
@@ -49,7 +50,7 @@ export default function Register({
                 }
               );
             } catch (e) {
-              console.log(e);
+              console.error(e);
             }
             //console.log(res.status);
           }}
@@ -77,5 +78,8 @@ const styles = StyleSheet.create({
   register: {
     color: 'white',
     fontSize: 20,
+  },
+  input: {
+    color: 'white',
   },
 });
