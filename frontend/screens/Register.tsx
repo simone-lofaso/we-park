@@ -35,21 +35,22 @@ export default function Register({
         />
         <Submit
           onPress={async () => {
-            try{
+            try {
               console.log(form);
-            const res = await fetch(
-              `http://172.20.10.3:8000/api/v1/user/register`,
-              {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form),
-              }
-            );
+              const res = await fetch(
+                `http://172.20.10.3:8000/api/v1/user/register`,
+                {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(form),
+                }
+              );
+            } catch (e) {
+              console.log(e);
             }
-            catch(e){console.log(e)}
             //console.log(res.status);
           }}
         />
