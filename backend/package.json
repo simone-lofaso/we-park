@@ -4,7 +4,8 @@
     "start": "ts-node-esm app.ts",
     "format": "prettier -w .",
     "lint": "prettier -c .",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "cd .. && npm i"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
