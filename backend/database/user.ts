@@ -2,7 +2,7 @@
  * This module represents the User table.
  */
 
-import { db } from '.';
+import db from '.';
 
 const UserTable = {
   register: (email: string, password: string) => {
