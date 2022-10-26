@@ -37,7 +37,6 @@ export default function Register({
           title='Submit'
           onPress={async () => {
             try {
-              console.log(form);
               const res = await fetch(
                 'http://172.20.10.3:8000/api/v1/user/register',
                 {
@@ -52,7 +51,12 @@ export default function Register({
             } catch (e) {
               console.error(e);
             }
-            //console.log(res.status);
+          }}
+        />
+        <Button
+          title='Go to Login'
+          onPress={async () => {
+            navigation.navigate('Login');
           }}
         />
       </ImageBackground>

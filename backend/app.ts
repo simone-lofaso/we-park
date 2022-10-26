@@ -1,20 +1,17 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import dotenv from 'dotenv';
 import express from 'express';
-import { db } from './database';
 import UserRouter from './routes/user';
+import ParkingRouter from './routes/parking';
 
-console.log(`IPHOST: ${process.env.IPHOST}`);
-const port = 8000;
+dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use('/api/v1/user/', UserRouter);
+app.use('/api/v1/parking', ParkingRouter);
 app.get('/', (req, res) => {
   req;
   res.json({ message: 'Hello World!' });
 });
 
-app.listen(port, process.env.IPHOST || 'localhost', () => {
-  console.log(`Listening on port: ${[port]}`);
-});
+export default app;
