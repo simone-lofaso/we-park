@@ -53,6 +53,12 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
             //console.log(res.status);
           }}
         />
+        <Button
+          title='Go to Register'
+          onPress={async () => {
+            navigation.navigate('Register');
+          }}
+        />
       </ImageBackground>
     </SafeAreaView>
   );

@@ -53,7 +53,7 @@ exports[`renders correctly 1`] = `
         }
       }
     >
-      Login
+      Register
     </Text>
     <View
       style={
@@ -292,7 +292,7 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            Go to Register
+            Go to Login
           </Text>
         </View>
       </View>
