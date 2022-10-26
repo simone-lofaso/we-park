@@ -61,4 +61,29 @@ connection.query(
     )`
 );
 
+connection.query(
+  //use execute if user input, w/ ? instead of arr
+  `INSERT INTO spaces(floor, row, section, parked_user, garage_id) values (1, 1, 'A', null, 1), 
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1),
+  (1, 1, 'A', null, 1)`
+);
+
 export { connection as db };
