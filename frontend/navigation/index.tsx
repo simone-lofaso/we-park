@@ -10,6 +10,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
+import Login from '../screens/Login';
 
 import Register from '../screens/Register';
 import { RootStackParamList } from '../types';
@@ -39,8 +40,8 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Register'
-        component={Register}
+        name='Login'
+        component={Login}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
