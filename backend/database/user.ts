@@ -11,6 +11,7 @@ const UserTable = {
       [email, password]
     );
   },
+
   execute: db.execute,
 };
 

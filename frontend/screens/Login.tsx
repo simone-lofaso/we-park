@@ -9,9 +9,7 @@ type FormState = {
   password: string;
 };
 
-export default function Register({
-  navigation,
-}: RootStackScreenProps<'Register'>) {
+export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
   const [form, setForm] = useState<FormState>({
     email: '',
     password: '',
@@ -20,7 +18,7 @@ export default function Register({
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={NorthGarage} style={styles.picture}>
-        <Text style={styles.register}>Register</Text>
+        <Text style={styles.Login}>Login</Text>
         <Input
           placeholder='Email'
           onChangeText={(e) => setForm({ ...form, email: e })}
@@ -39,7 +37,7 @@ export default function Register({
             try {
               console.log(form);
               const res = await fetch(
-                'http://172.20.10.3:8000/api/v1/user/register',
+                'http://172.20.10.3:8000/api/v1/user/Login',
                 {
                   method: 'POST',
                   headers: {
@@ -75,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
-  register: {
+  Login: {
     color: 'white',
     fontSize: 20,
   },
