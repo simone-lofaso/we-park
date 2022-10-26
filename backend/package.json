@@ -5,7 +5,8 @@
     "format": "prettier -w .",
     "lint": "prettier -c .",
     "test": "jest",
-    "prepare": "cd .. && npm i"
+    "prepare": "cd .. && npm i",
+    "reset-db": "ts-node-esm ./database/re-init.ts"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
