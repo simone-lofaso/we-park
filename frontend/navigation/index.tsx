@@ -10,9 +10,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
-import Login from '../screens/Login';
-
-import Register from '../screens/Register';
+import { Home, Login, Map, Register, ScanAI } from '../screens';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -42,6 +40,26 @@ function RootNavigator() {
       <Stack.Screen
         name='Login'
         component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Register'
+        component={Register}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Home'
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Map'
+        component={Map}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='ScanAI'
+        component={ScanAI}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
