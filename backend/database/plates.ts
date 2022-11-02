@@ -2,7 +2,7 @@
  * Module representing the plates table
  */
 
-import { db } from '.';
+import db from '.';
 
 const PlatesTable = {
     register: (plate_num: string) => {

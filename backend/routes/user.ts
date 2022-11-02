@@ -1,16 +1,15 @@
 import { Router } from 'express';
-const router = Router();
 import UserTable from '../database/user';
+const router = Router();
 
 router.post('/register', (req, res) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
     UserTable.register(email, password);
     res.status(200).end();
   } catch (e) {
     console.error(e);
-    res.status(500).json(e);
+    res.status(500).json(e).end();
   }
 });
 

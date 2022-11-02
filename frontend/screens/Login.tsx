@@ -1,55 +1,26 @@
 import { ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
 import { Input, Button, Text } from '@rneui/themed';
 import { RootStackScreenProps } from '../types';
-import NorthGarage from '../assets/images/north-garage.jpg';
 import { useState } from 'react';
 import Constants from 'expo-constants';
+import NorthGarage from '../assets/images/north-garage.jpg';
+import Home from './Home';
 
 type FormState = {
   email: string;
   password: string;
 };
 
-const doFetch = async () => {
-  return;
-};
-
-export default function Register({
-  navigation,
-}: RootStackScreenProps<'Register'>) {
+export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
   const [form, setForm] = useState<FormState>({
     email: '',
     password: '',
   });
 
-  const handleSubmit = async () => {
-    try {
-      const res = await fetch(
-        `http://${
-          Constants.expoConfig?.extra?.apiUrl || 'localhost'
-        }:8000/api/v1/user/register`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form),
-        }
-      );
-      if (res.ok) {
-        navigation.navigate('Home');
-      } else {
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={NorthGarage} style={styles.picture}>
-        <Text style={styles.register}>Register</Text>
+        <Text style={styles.Login}>Login</Text>
         <Input
           placeholder='Email'
           onChangeText={(e) => setForm({ ...form, email: e })}
@@ -62,11 +33,40 @@ export default function Register({
           inputStyle={styles.input}
           placeholderTextColor='white'
         />
-        <Button title='Submit' onPress={handleSubmit} />
         <Button
-          title='Go to Login'
+          title='Submit'
           onPress={async () => {
-            navigation.navigate('Login');
+            // try {
+            //   console.log(form);
+            //   console.log(
+            //     `http://${
+            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
+            //     }:8000/api/v1/user/Login`
+            //   );
+            //   const res = await fetch(
+            //     `http://${
+            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
+            //     }:8000/api/v1/user/Login`,
+            //     {
+            //       method: 'POST',
+            //       headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json',
+            //       },
+            //       body: JSON.stringify(form),
+            //     }
+            //   );
+            // } catch (e) {
+            //   console.error(e);
+            // }
+            navigation.navigate('Home');
+            //console.log(res.status);
+          }}
+        />
+        <Button
+          title='Go to Register'
+          onPress={async () => {
+            navigation.navigate('Register');
           }}
         />
       </ImageBackground>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
-  register: {
+  Login: {
     color: 'white',
     fontSize: 20,
   },

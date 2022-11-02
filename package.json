@@ -2,7 +2,8 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "prettier -c .",
-    "format": "prettier -w ."
+    "format": "prettier -w .",
+    "postinstall": "cd backend && npm i --ignore-scripts && cd ../frontend && npm i --ignore-scripts"
   },
   "devDependencies": {
     "husky": "^8.0.1",
