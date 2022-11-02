@@ -4,6 +4,7 @@ import { RootStackScreenProps } from '../types';
 import { useState } from 'react';
 import Constants from 'expo-constants';
 import NorthGarage from '../assets/images/north-garage.jpg';
+import Home from './Home';
 
 type FormState = {
   email: string;
@@ -35,29 +36,30 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
         <Button
           title='Submit'
           onPress={async () => {
-            try {
-              console.log(form);
-              console.log(
-                `http://${
-                  Constants.expoConfig?.extra?.apiUrl || 'localhost'
-                }:8000/api/v1/user/Login`
-              );
-              const res = await fetch(
-                `http://${
-                  Constants.expoConfig?.extra?.apiUrl || 'localhost'
-                }:8000/api/v1/user/Login`,
-                {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(form),
-                }
-              );
-            } catch (e) {
-              console.error(e);
-            }
+            // try {
+            //   console.log(form);
+            //   console.log(
+            //     `http://${
+            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
+            //     }:8000/api/v1/user/Login`
+            //   );
+            //   const res = await fetch(
+            //     `http://${
+            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
+            //     }:8000/api/v1/user/Login`,
+            //     {
+            //       method: 'POST',
+            //       headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json',
+            //       },
+            //       body: JSON.stringify(form),
+            //     }
+            //   );
+            // } catch (e) {
+            //   console.error(e);
+            // }
+            navigation.navigate('Home');
             //console.log(res.status);
           }}
         />
