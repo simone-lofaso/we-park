@@ -4,6 +4,7 @@
  */
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ParkingSpace } from './api';
 
 declare global {
   namespace ReactNavigation {
@@ -16,7 +17,10 @@ export type RootStackParamList = {
   ScanAI: undefined;
   Login: undefined;
   Home: undefined;
-  Map: undefined;
+  Map: {
+    parkingSpace: ParkingSpace;
+    garageName: string;
+  };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
