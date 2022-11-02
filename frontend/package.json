@@ -17,12 +17,14 @@
     ]
   },
   "dependencies": {
+    "@expo/ngrok": "^2.5.0",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@rneui/base": "^4.0.0-rc.6",
     "@rneui/themed": "^4.0.0-rc.6",
+    "dotenv": "^16.0.3",
     "expo": "~46.0.9",
     "expo-asset": "~8.6.1",
     "expo-constants": "~13.2.4",
@@ -34,7 +36,7 @@
     "expo-web-browser": "~11.0.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-native": "0.69.4",
+    "react-native": "0.69.6",
     "react-native-safe-area-context": "^4.3.1",
     "react-native-screens": "~3.15.0",
     "react-native-web": "~0.18.7"
@@ -48,7 +50,8 @@
     "jest": "^26.6.3",
     "jest-expo": "~44.0.1",
     "react-test-renderer": "18.0.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.3.5",
+    "@expo/ngrok": "^4.1.0"
   },
   "private": true
 }

@@ -1,8 +1,9 @@
 import { ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
 import { Input, Button, Text } from '@rneui/themed';
 import { RootStackScreenProps } from '../types';
-import NorthGarage from '../assets/images/north-garage.jpg';
 import { useState } from 'react';
+import Constants from 'expo-constants';
+import NorthGarage from '../assets/images/north-garage.jpg';
 
 type FormState = {
   email: string;
@@ -36,8 +37,15 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
           onPress={async () => {
             try {
               console.log(form);
+              console.log(
+                `http://${
+                  Constants.expoConfig?.extra?.apiUrl || 'localhost'
+                }:8000/api/v1/user/Login`
+              );
               const res = await fetch(
-                'http://172.20.10.3:8000/api/v1/user/Login',
+                `http://${
+                  Constants.expoConfig?.extra?.apiUrl || 'localhost'
+                }:8000/api/v1/user/Login`,
                 {
                   method: 'POST',
                   headers: {
@@ -51,6 +59,12 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
               console.error(e);
             }
             //console.log(res.status);
+          }}
+        />
+        <Button
+          title='Go to Register'
+          onPress={async () => {
+            navigation.navigate('Register');
           }}
         />
       </ImageBackground>

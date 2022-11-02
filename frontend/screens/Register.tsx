@@ -3,10 +3,15 @@ import { Input, Button, Text } from '@rneui/themed';
 import { RootStackScreenProps } from '../types';
 import NorthGarage from '../assets/images/north-garage.jpg';
 import { useState } from 'react';
+import Constants from 'expo-constants';
 
 type FormState = {
   email: string;
   password: string;
+};
+
+const doFetch = async () => {
+  return;
 };
 
 export default function Register({
@@ -16,6 +21,30 @@ export default function Register({
     email: '',
     password: '',
   });
+
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch(
+        `http://${
+          Constants.expoConfig?.extra?.apiUrl || 'localhost'
+        }:8000/api/v1/user/register`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(form),
+        }
+      );
+      if (res.ok) {
+        navigation.navigate('Home');
+      } else {
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,26 +62,11 @@ export default function Register({
           inputStyle={styles.input}
           placeholderTextColor='white'
         />
+        <Button title='Submit' onPress={handleSubmit} />
         <Button
-          title='Submit'
+          title='Go to Login'
           onPress={async () => {
-            try {
-              console.log(form);
-              const res = await fetch(
-                'http://172.20.10.3:8000/api/v1/user/register',
-                {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(form),
-                }
-              );
-            } catch (e) {
-              console.error(e);
-            }
-            //console.log(res.status);
+            navigation.navigate('Login');
           }}
         />
       </ImageBackground>
