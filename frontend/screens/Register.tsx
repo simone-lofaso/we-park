@@ -10,10 +10,6 @@ type FormState = {
   password: string;
 };
 
-const doFetch = async () => {
-  return;
-};
-
 export default function Register({
   navigation,
 }: RootStackScreenProps<'Register'>) {
@@ -24,6 +20,7 @@ export default function Register({
 
   const handleSubmit = async () => {
     try {
+      // TODO: Store session on phone
       const res = await fetch(
         `http://${
           Constants.expoConfig?.extra?.apiUrl || 'localhost'

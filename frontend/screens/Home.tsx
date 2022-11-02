@@ -9,7 +9,21 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
     <SafeAreaView>
       <Button
         title='Go To Recommend'
-        onPress={() => navigation.navigate('Map')}
+        onPress={() => {
+          const parkingSpace = {
+            // TODO: replace with api call to db to get available space
+            id: 1,
+            floor: 1,
+            row: 1,
+            section: 'A',
+            garageId: 1,
+          };
+          const garageName = 'North Garage'; // TODO: replace with api call to get garagename
+          navigation.navigate('Map', {
+            parkingSpace,
+            garageName,
+          });
+        }}
       />
     </SafeAreaView>
   );
