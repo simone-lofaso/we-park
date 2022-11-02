@@ -17,6 +17,31 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
     password: '',
   });
 
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch(
+        `http://${
+          Constants.expoConfig?.extra?.apiUrl || 'localhost'
+        }:8000/api/v1/user/Login`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(form),
+        }
+      );
+      if (res.ok) {
+        // TODO: Store session on phone
+        navigation.navigate('Home');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    //console.log(res.status);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={NorthGarage} style={styles.picture}>
@@ -33,9 +58,11 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
           inputStyle={styles.input}
           placeholderTextColor='white'
         />
+        <Button title='Submit' onPress={handleSubmit} />
         <Button
-          title='Submit'
-          onPress={async () => {
+          title='Go to Register'
+          onPress={async () => { navigation.navigate('Register');}}
+
             // try {
             //   console.log(form);
             //   console.log(

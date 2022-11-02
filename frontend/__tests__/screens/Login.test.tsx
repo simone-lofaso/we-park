@@ -4,7 +4,6 @@ import Login from '../../screens/Login';
 
 it(`renders correctly`, () => {
   const props: any = {};
-
   const tree = create(<Login {...props} />).toJSON();
   expect(tree).toMatchSnapshot();
 });
