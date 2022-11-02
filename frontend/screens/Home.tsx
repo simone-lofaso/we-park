@@ -37,6 +37,7 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
         title='Go To Login'
         onPress={() => navigation.navigate('Login')}
       />
+      <Button title='Profile' onPress={() => navigation.navigate('Profile')} />
     </SafeAreaView>
   );
 }
