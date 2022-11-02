@@ -25,6 +25,18 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
           });
         }}
       />
+      <Button
+        title='Go To Register'
+        onPress={() => navigation.navigate('Register')}
+      />
+      <Button
+        title='Go To ScanAI'
+        onPress={() => navigation.navigate('ScanAI')}
+      />
+      <Button
+        title='Go To Login'
+        onPress={() => navigation.navigate('Login')}
+      />
     </SafeAreaView>
   );
 }

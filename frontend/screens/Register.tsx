@@ -10,6 +10,10 @@ type FormState = {
   password: string;
 };
 
+const doFetch = async () => {
+  return;
+};
+
 export default function Register({
   navigation,
 }: RootStackScreenProps<'Register'>) {

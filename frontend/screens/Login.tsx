@@ -62,6 +62,37 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
           title='Go to Register'
           onPress={async () => {
             navigation.navigate('Register');
+            // try {
+            //   console.log(form);
+            //   console.log(
+            //     `http://${
+            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
+            //     }:8000/api/v1/user/Login`
+            //   );
+            //   const res = await fetch(
+            //     `http://${
+            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
+            //     }:8000/api/v1/user/Login`,
+            //     {
+            //       method: 'POST',
+            //       headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json',
+            //       },
+            //       body: JSON.stringify(form),
+            //     }
+            //   );
+            // } catch (e) {
+            //   console.error(e);
+            // }
+            navigation.navigate('Home');
+            //console.log(res.status);
+          }}
+        />
+        <Button
+          title='Go to Register'
+          onPress={async () => {
+            navigation.navigate('Register');
           }}
         />
       </ImageBackground>
