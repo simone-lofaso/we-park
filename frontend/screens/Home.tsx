@@ -1,13 +1,28 @@
 import { Button } from '@rneui/themed';
-import { SafeAreaView } from 'react-native';
 import { RootStackScreenProps } from '../types';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { CoinCounter } from '../components';
+import type { ReactNode } from 'react';
 
-// TODO: Real Home screen
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#61FFB1',
+    flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+});
+
+const Row = ({ children }: { children: ReactNode }) => (
+  <View style={styles.row}>{children}</View>
+);
 
 export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   return (
-    <SafeAreaView>
-      <Button
+    <SafeAreaView style={styles.container}>
+      <CoinCounter tokens={15} />
+      {/* <Button
         title='Go To Recommend'
         onPress={() => {
           const parkingSpace = {
@@ -36,7 +51,7 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
       <Button
         title='Go To Login'
         onPress={() => navigation.navigate('Login')}
-      />
+      /> */}
     </SafeAreaView>
   );
 }

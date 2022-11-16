@@ -10,10 +10,6 @@ type FormState = {
   password: string;
 };
 
-const doFetch = async () => {
-  return;
-};
-
 export default function Register({
   navigation,
 }: RootStackScreenProps<'Register'>) {
@@ -49,28 +45,26 @@ export default function Register({
 
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={NorthGarage} style={styles.picture}>
-        <Text style={styles.register}>Register</Text>
-        <Input
-          placeholder='Email'
-          onChangeText={(e) => setForm({ ...form, email: e })}
-          inputStyle={styles.input}
-          placeholderTextColor='white'
-        />
-        <Input
-          placeholder='Password'
-          onChangeText={(e) => setForm({ ...form, password: e })}
-          inputStyle={styles.input}
-          placeholderTextColor='white'
-        />
-        <Button title='Submit' onPress={handleSubmit} />
-        <Button
-          title='Go to Login'
-          onPress={async () => {
-            navigation.navigate('Login');
-          }}
-        />
-      </ImageBackground>
+      <Text style={styles.register}>Register</Text>
+      <Input
+        placeholder='Email'
+        onChangeText={(e) => setForm({ ...form, email: e })}
+        inputStyle={styles.input}
+        placeholderTextColor='white'
+      />
+      <Input
+        placeholder='Password'
+        onChangeText={(e) => setForm({ ...form, password: e })}
+        inputStyle={styles.input}
+        placeholderTextColor='white'
+      />
+      <Button title='Submit' onPress={handleSubmit} />
+      <Button
+        title='Go to Login'
+        onPress={async () => {
+          navigation.navigate('Login');
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -79,6 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#61FFB1',
     justifyContent: 'center',
     height: '100%',
     padding: 20,

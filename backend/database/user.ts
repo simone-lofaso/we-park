@@ -15,7 +15,10 @@ const UserTable = {
    * User end needs floor/row/section, db uses some specific id to track space status in backend
    */
   park: (user_id: String, id: String) => {
-    db.execute('UPDATE spaces set `parkedUserId` = ? where `id` = ?' ,[user_id, id])
+    db.execute('UPDATE spaces set `parkedUserId` = ? where `id` = ?', [
+      user_id,
+      id,
+    ]);
   },
   execute: db.execute,
 };
