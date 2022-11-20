@@ -7,11 +7,46 @@ import db from '.';
 const UserTable = {
   register: (email: string, password: string) => {
     db.execute(
-      `INSERT INTO users(email, password, tokens) values '?','?',3);`,
+      `INSERT INTO users(email, password, tokens) values ?,?,3);`,
       [email, password]
     );
   },
 
+  changeEmail: (email: string, newEmail: string) => {
+    console.log(email)
+    return new Promise((resolve, reject) => {
+    db.execute(
+    `UPDATE users
+      SET email = ?
+      WHERE email = ?`,
+      [newEmail, email],(error, result) => {
+        if(error){
+          reject(error)
+          return
+        }
+        resolve(result)
+      }
+    );
+  })
+  },
+
+  changePassword: (email: string, newPassword: string) => {
+    return new Promise((resolve, reject) => {
+      db.execute(
+        `UPDATE users
+        SET password = ?
+        WHERE email = ?`,
+        [newPassword, email],(error, result) => {
+          if(error){
+            reject(error)
+            return
+          }
+          resolve(result)
+        }
+
+      );
+    })
+  },
   login: (email: string, password: string) => {
     return new Promise((resolve, reject) => {
       db.execute(
@@ -21,7 +56,10 @@ const UserTable = {
             reject(error)
             return
           }
-
+          if(!res){
+            reject(new Error('User not found'));
+            return
+          }
           resolve(res)
         }
       )
