@@ -11,6 +11,23 @@ const UserTable = {
       [email, password]
     );
   },
+
+  login: (email: string, password: string) => {
+    return new Promise((resolve, reject) => {
+      db.execute(
+        `SELECT email FROM users WHERE email = '${email}' AND password = '${password}'`,
+        (error, res, field) => {
+          if(error){
+            reject(error)
+            return
+          }
+
+          resolve(res)
+        }
+      )
+    })
+    
+  },
   /**
    * User end needs floor/row/section, db uses some specific id to track space status in backend
    */

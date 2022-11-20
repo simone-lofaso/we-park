@@ -13,21 +13,15 @@ router.post('/register', (req, res) => {
   }
 });
 
-router.post('/login', (req, res) => {
+router.post('/login',async (req, res) => {
   const { email, password } = req.body;
   try {
-    UserTable.execute(
-      `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`,
-      (error, results, fields) => {
-        error;
-        console.log(results);
-        fields;
-      }
-    );
-    res.status(200).end();
+   await UserTable.login(email, password)
+    res.status(200).json({email});
   } catch (e) {
     console.error(e);
     res.status(500).json(e);
+    
   }
 });
 
