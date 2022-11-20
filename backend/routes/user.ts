@@ -25,4 +25,30 @@ router.post('/login',async (req, res) => {
   }
 });
 
+router.post('/change-email', async(req, res)=> {
+  const {email, password, newEmail} = req.body;
+  try{
+    await UserTable.login(email, password)
+    const result = await UserTable.changeEmail(email, newEmail)
+    console.log(result)
+    res.status(200).json({newEmail})
+  } catch(e){
+    console.error(e);
+    res.status(500).json(e);
+  }
+});
+
+router.post('/change-password', async(req, res) =>{
+  const {email, password, newPassword} = req.body;
+  try{
+    await UserTable.login(email, password)
+    const result = await UserTable.changePassword(email, newPassword)
+    console.log(result)
+    res.status(200).json({newPassword})
+  } catch(e){
+    console.error(e);
+    res.status(500).json(e);
+  }
+});
+
 export default router;
