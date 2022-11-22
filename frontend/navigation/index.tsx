@@ -10,7 +10,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
-import { Home, Login, Map, Register, ScanAI } from '../screens';
+import { Home, Login, Map, Register, ScanAI, Profile } from '../screens';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -62,6 +62,7 @@ function RootNavigator() {
         component={ScanAI}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name='Profile' component={Profile} />
     </Stack.Navigator>
   );
 }

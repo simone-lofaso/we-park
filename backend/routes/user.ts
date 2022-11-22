@@ -51,4 +51,15 @@ router.post('/change-password', async(req, res) =>{
   }
 });
 
+router.post('/add-plate', async (req, res) => {
+  const { plateNum, userId } = req.body;
+  try {
+    UserTable.addLicensePlate(plateNum, userId);
+    res.status(200).end();
+  } catch (e) {
+    console.error(e);
+    res.status(500).json(e);
+  }
+});
+
 export default router;
