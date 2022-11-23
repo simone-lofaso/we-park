@@ -1,17 +1,13 @@
-import { ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
-import { Input, Button, Text } from '@rneui/themed';
-import { RootStackScreenProps } from '../types';
-import NorthGarage from '../assets/images/north-garage.jpg';
+import { Button, Input, Text } from '@rneui/themed';
 import { useState } from 'react';
-import Constants from 'expo-constants';
+import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
+import { doRegister } from '../api';
+import NorthGarage from '../assets/images/north-garage.jpg';
+import { RootStackScreenProps } from '../types';
 
 type FormState = {
   email: string;
   password: string;
-};
-
-const doFetch = async () => {
-  return;
 };
 
 export default function Register({
@@ -21,31 +17,6 @@ export default function Register({
     email: '',
     password: '',
   });
-
-  const handleSubmit = async () => {
-    try {
-      // TODO: Store session on phone
-      const res = await fetch(
-        `http://${
-          Constants.expoConfig?.extra?.apiUrl || 'localhost'
-        }:8000/api/v1/user/register`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form),
-        }
-      );
-      if (res.ok) {
-        navigation.navigate('Home');
-      } else {
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,7 +34,7 @@ export default function Register({
           inputStyle={styles.input}
           placeholderTextColor='white'
         />
-        <Button title='Submit' onPress={handleSubmit} />
+        <Button title='Submit' onPress={() => doRegister(form, navigation)} />
         <Button
           title='Go to Login'
           onPress={async () => {

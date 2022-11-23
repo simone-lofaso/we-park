@@ -1,11 +1,9 @@
-import { ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
-import { Input, Button, Text } from '@rneui/themed';
-import { RootStackScreenProps } from '../types';
+import { Button, Input, Text } from '@rneui/themed';
 import { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Constants from 'expo-constants';
+import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
+import { doLogin } from '../api';
 import NorthGarage from '../assets/images/north-garage.jpg';
-import Home from './Home';
+import { RootStackScreenProps } from '../types';
 
 type FormState = {
   email: string;
@@ -17,30 +15,6 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
     email: '',
     password: '',
   });
-
-  const handleSubmit = async () => {
-    try {
-      const res = await fetch(
-        `http://${
-          Constants.expoConfig?.extra?.apiUrl || 'localhost'
-        }:8000/api/v1/user/Login`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form),
-        }
-      );
-      if (res.ok) {
-        // TODO: Store session on phone
-        navigation.navigate('Home');
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -58,13 +32,7 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
           inputStyle={styles.input}
           placeholderTextColor='white'
         />
-        <Button
-          title='Submit'
-          onPress={async () => {
-            await AsyncStorage.setItem('userId', '1');
-            navigation.navigate('Home');
-          }}
-        />
+        <Button title='Submit' onPress={() => doLogin(form, navigation)} />
         <Button
           title='Go to Register'
           onPress={async () => {
