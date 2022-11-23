@@ -6,7 +6,6 @@
     "postinstall": "cd backend && npm i --ignore-scripts && cd ../frontend && npm i --ignore-scripts"
   },
   "devDependencies": {
-    "husky": "^8.0.1",
     "prettier": "^2.7.1"
   }
 }
