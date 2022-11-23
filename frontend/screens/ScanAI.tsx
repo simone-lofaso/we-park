@@ -15,14 +15,18 @@ export default function App() {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Text style={{ textAlign: 'center' }}>
+          We need your permission to show the camera
+        </Text>
+        <Button onPress={requestPermission} title='grant permission' />
       </View>
     );
   }
 
   function toggleCameraType() {
-    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
   }
 
   return (
@@ -40,10 +44,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   camera: {
-    flex: 1
+    flex: 1,
   },
   buttonContainer: {
     flex: 1,

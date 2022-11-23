@@ -21,6 +21,7 @@ export type RootStackParamList = {
     parkingSpace: ParkingSpace;
     garageName: string;
   };
+  Profile: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

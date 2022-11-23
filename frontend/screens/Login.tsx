@@ -2,6 +2,7 @@ import { ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
 import { Input, Button, Text } from '@rneui/themed';
 import { RootStackScreenProps } from '../types';
 import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import NorthGarage from '../assets/images/north-garage.jpg';
 import Home from './Home';
@@ -39,7 +40,6 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
     } catch (e) {
       console.error(e);
     }
-    //console.log(res.status);
   };
 
   return (
@@ -58,36 +58,11 @@ export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
           inputStyle={styles.input}
           placeholderTextColor='white'
         />
-        <Button title='Submit' onPress={handleSubmit} />
         <Button
-          title='Go to Register'
-          onPress={async () => { navigation.navigate('Register');}}
-
-            // try {
-            //   console.log(form);
-            //   console.log(
-            //     `http://${
-            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
-            //     }:8000/api/v1/user/Login`
-            //   );
-            //   const res = await fetch(
-            //     `http://${
-            //       Constants.expoConfig?.extra?.apiUrl || 'localhost'
-            //     }:8000/api/v1/user/Login`,
-            //     {
-            //       method: 'POST',
-            //       headers: {
-            //         Accept: 'application/json',
-            //         'Content-Type': 'application/json',
-            //       },
-            //       body: JSON.stringify(form),
-            //     }
-            //   );
-            // } catch (e) {
-            //   console.error(e);
-            // }
+          title='Submit'
+          onPress={async () => {
+            await AsyncStorage.setItem('userId', '1');
             navigation.navigate('Home');
-            //console.log(res.status);
           }}
         />
         <Button
