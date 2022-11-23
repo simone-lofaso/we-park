@@ -6,28 +6,29 @@ import db from '.';
 
 const UserTable = {
   register: (email: string, password: string) => {
-    db.execute(
-      `INSERT INTO users(email, password, tokens) values ?,?,3);`,
-      [email, password]
-    );
+    db.execute(`INSERT INTO users(email, password, tokens) values ?,?,3);`, [
+      email,
+      password,
+    ]);
   },
 
   changeEmail: (email: string, newEmail: string) => {
-    console.log(email)
+    console.log(email);
     return new Promise((resolve, reject) => {
-    db.execute(
-    `UPDATE users
+      db.execute(
+        `UPDATE users
       SET email = ?
       WHERE email = ?`,
-      [newEmail, email],(error, result) => {
-        if(error){
-          reject(error)
-          return
+        [newEmail, email],
+        (error, result) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve(result);
         }
-        resolve(result)
-      }
-    );
-  })
+      );
+    });
   },
 
   changePassword: (email: string, newPassword: string) => {
@@ -36,35 +37,34 @@ const UserTable = {
         `UPDATE users
         SET password = ?
         WHERE email = ?`,
-        [newPassword, email],(error, result) => {
-          if(error){
-            reject(error)
-            return
+        [newPassword, email],
+        (error, result) => {
+          if (error) {
+            reject(error);
+            return;
           }
-          resolve(result)
+          resolve(result);
         }
-
       );
-    })
+    });
   },
   login: (email: string, password: string) => {
     return new Promise((resolve, reject) => {
       db.execute(
         `SELECT email FROM users WHERE email = '${email}' AND password = '${password}'`,
         (error, res, field) => {
-          if(error){
-            reject(error)
-            return
+          if (error) {
+            reject(error);
+            return;
           }
-          if(!res){
+          if (!res) {
             reject(new Error('User not found'));
-            return
+            return;
           }
-          resolve(res)
+          resolve(res);
         }
-      )
-    })
-    
+      );
+    });
   },
   /**
    * User end needs floor/row/section, db uses some specific id to track space status in backend

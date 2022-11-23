@@ -5,6 +5,7 @@ import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import NorthGarage from '../assets/images/north-garage.jpg';
+import Home from './Home';
 
 type FormState = {
   email: string;
