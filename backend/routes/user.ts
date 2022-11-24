@@ -2,10 +2,12 @@ import { Router } from 'express';
 import UserTable from '../database/user';
 const router = Router();
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
-    UserTable.register(email, password);
+    const { result } = await UserTable.register(email, password);
+    if (result.constructor.name == 'OkPacket') {
+    }
     res.status(200).end();
   } catch (e) {
     console.error(e);

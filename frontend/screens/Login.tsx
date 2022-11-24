@@ -1,45 +1,12 @@
-import { Button, Input, Text } from '@rneui/themed';
-import { useState } from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
-import { doLogin } from '../api';
-import NorthGarage from '../assets/images/north-garage.jpg';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { RootStackScreenProps } from '../types';
-
-type FormState = {
-  email: string;
-  password: string;
-};
+import { green } from '../constants/Colors';
+import { AuthForm } from '../components/AuthForm';
 
 export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
-  const [form, setForm] = useState<FormState>({
-    email: '',
-    password: '',
-  });
-
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={NorthGarage} style={styles.picture}>
-        <Text style={styles.Login}>Login</Text>
-        <Input
-          placeholder='Email'
-          onChangeText={(e) => setForm({ ...form, email: e })}
-          inputStyle={styles.input}
-          placeholderTextColor='white'
-        />
-        <Input
-          placeholder='Password'
-          onChangeText={(e) => setForm({ ...form, password: e })}
-          inputStyle={styles.input}
-          placeholderTextColor='white'
-        />
-        <Button title='Submit' onPress={() => doLogin(form, navigation)} />
-        <Button
-          title='Go to Register'
-          onPress={async () => {
-            navigation.navigate('Register');
-          }}
-        />
-      </ImageBackground>
+      <AuthForm formType='Login' navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -48,22 +15,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: green,
     justifyContent: 'center',
     height: '100%',
     padding: 20,
     width: '100%',
-  },
-  picture: {
-    alignItems: 'center',
-    height: '100%',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  Login: {
-    color: 'white',
-    fontSize: 20,
-  },
-  input: {
-    color: 'white',
   },
 });

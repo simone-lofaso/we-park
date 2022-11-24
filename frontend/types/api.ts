@@ -6,6 +6,8 @@ export type User = {
   email: string;
   password: string;
   tokens: number;
+  plates: Plate[];
+  parkedSpaceId: number | null;
 };
 
 /**

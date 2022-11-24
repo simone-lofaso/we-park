@@ -1,3 +1,10 @@
+import type {
+  OkPacket,
+  ResultSetHeader,
+  RowDataPacket,
+  FieldPacket,
+} from 'mysql2';
+
 /**
  * Type for `users` Table in db.
  */
@@ -37,4 +44,14 @@ export type Plate = {
   id: number;
   plateNum: string;
   userId: number;
+};
+
+export type QueryResult = {
+  result:
+    | OkPacket
+    | ResultSetHeader
+    | RowDataPacket[]
+    | RowDataPacket[][]
+    | OkPacket[];
+  fields: FieldPacket[];
 };

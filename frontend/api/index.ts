@@ -1,18 +1,19 @@
 import Constants from 'expo-constants';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { RootStackScreenProps, User } from '../types';
+import { storeUser } from '../util';
+
+const isUser = (obj: any): obj is User => {
+  return ['id', 'email', 'password', 'tokens', 'plates', 'parkedSpaceId'].every(
+    (s) => s in obj
+  );
+};
 
 /**
  * Makes a POST request to the backend, then navigates to Home on successful registration.
  */
 export const doRegister = async (
   form: { email: string; password: string },
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'Register',
-    undefined
-  >
+  navigation: RootStackScreenProps<'Register'>['navigation']
 ) => {
   try {
     const res = await fetch(
@@ -29,7 +30,8 @@ export const doRegister = async (
     );
     const data = await res.json();
     if (res.ok) {
-      await AsyncStorage.setItem('user', JSON.stringify(data));
+      if (!isUser(data)) throw new Error('Data returned is not a User.');
+      await storeUser(data);
       navigation.navigate('Home');
     } else throw new Error(data.message);
   } catch (e) {
@@ -43,11 +45,8 @@ export const doRegister = async (
  */
 export const doLogin = async (
   form: { email: string; password: string },
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'Login',
-    undefined
-  >) => {
+  navigation: RootStackScreenProps<'Login'>['navigation']
+) => {
   const res = await fetch(
     `http://${
       Constants.expoConfig?.extra?.apiUrl || 'localhost'
@@ -61,8 +60,10 @@ export const doLogin = async (
       body: JSON.stringify(form),
     }
   );
+  const data = await res.json();
   if (res.ok) {
-    // TODO: Store session on phone
+    if (!isUser(data)) throw new Error('Data returned is not a User.');
+    await storeUser(data);
     navigation.navigate('Home');
   }
 };
