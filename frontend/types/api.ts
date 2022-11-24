@@ -4,7 +4,6 @@
 export type User = {
   id: number;
   email: string;
-  password: string;
   tokens: number;
   plates: Plate[];
   parkedSpaceId: number | null;

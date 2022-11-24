@@ -46,12 +46,14 @@ export type Plate = {
   userId: number;
 };
 
-export type QueryResult = {
-  result:
+export type QueryResult<
+  T =
     | OkPacket
     | ResultSetHeader
     | RowDataPacket[]
     | RowDataPacket[][]
-    | OkPacket[];
+    | OkPacket[]
+> = {
+  result: T;
   fields: FieldPacket[];
 };

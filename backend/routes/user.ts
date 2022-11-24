@@ -5,12 +5,14 @@ const router = Router();
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { result } = await UserTable.register(email, password);
-    if (result.constructor.name == 'OkPacket') {
+    const user = await UserTable.register(email, password);
+    res.status(200).json({ ...user });
+  } catch (error) {
+    const e = error as any;
+    if (e.code === 'ER_DUP_ENTRY') {
+      res.status(409).end();
+      return;
     }
-    res.status(200).end();
-  } catch (e) {
-    console.error(e);
     res.status(500).json(e).end();
   }
 });
@@ -18,8 +20,8 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
-    await UserTable.login(email, password);
-    res.status(200).json({ email });
+    const user = await UserTable.login(email, password);
+    res.status(200).json({ ...user });
   } catch (e) {
     console.error(e);
     res.status(500).json(e);

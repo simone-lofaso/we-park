@@ -2,31 +2,43 @@
  * This module represents the User table.
  */
 
-import { QueryResult } from '../types';
+import { Plate, QueryResult, User } from '../types/database';
 import db from '.';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { ApiUser } from '../types';
 
-const asyncQuery = (query: string, values?: any): Promise<QueryResult> => {
-  return new Promise<QueryResult>((resolve, reject) => {
+const asyncQuery = <T extends QueryResult['result']>(
+  query: string,
+  values?: any
+): Promise<QueryResult<T>> => {
+  return new Promise<QueryResult<T>>((resolve, reject) => {
     db.execute(query, values, (err, result, fields) => {
       if (err) {
         reject(err);
         return;
       }
-      resolve({ result, fields });
+      resolve({ result: result as T, fields });
       return;
     });
   });
 };
 const UserTable = {
-  register: (email: string, password: string) => {
-    return asyncQuery(
-      `INSERT INTO users(email, password, tokens) values ?,?,3);`,
+  register: async (email: string, password: string): Promise<ApiUser> => {
+    const { result } = await asyncQuery<ResultSetHeader>(
+      `INSERT INTO users(email, password, tokens) values (?,?,10);`,
       [email, password]
     );
+    return {
+      id: result.insertId,
+      email,
+      tokens: 10,
+      plates: [],
+      parkedSpaceId: null,
+    };
   },
 
   changeEmail: (email: string, newEmail: string) => {
-    return asyncQuery(`UPDATE users      SET email = ?      WHERE email = ?`, [
+    return asyncQuery(`UPDATE users SET email = ? WHERE email = ?`, [
       newEmail,
       email,
     ]);
@@ -38,10 +50,24 @@ const UserTable = {
       [newPassword, email]
     );
   },
-  login: (email: string, password: string) => {
-    return asyncQuery(
-      `SELECT email FROM users WHERE email = '${email}' AND password = '${password}'`
+
+  login: async (email: string, password: string): Promise<ApiUser> => {
+    const { result: user } = await asyncQuery<RowDataPacket[]>(
+      `SELECT id, email, tokens FROM users WHERE email = '${email}' AND password = '${password}'`
     );
+    const { result: plates } = await asyncQuery<RowDataPacket[]>(
+      `SELECT * FROM plates WHERE userId=?`,
+      [(user[0] as RowDataPacket).id]
+    );
+    const { result: parkedSpace } = await asyncQuery<RowDataPacket[]>(
+      `SELECT id FROM spaces WHERE parkedUserId=?`,
+      [(user[0] as RowDataPacket).id]
+    );
+    return {
+      ...(user[0] as Omit<User, 'password'>),
+      plates: plates as Plate[],
+      parkedSpaceId: parkedSpace[0] ? (parkedSpace[0].id as number) : null,
+    };
   },
   /**
    * User end needs floor/row/section, db uses some specific id to track space status in backend

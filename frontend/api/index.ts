@@ -3,7 +3,7 @@ import type { RootStackScreenProps, User } from '../types';
 import { storeUser } from '../util';
 
 const isUser = (obj: any): obj is User => {
-  return ['id', 'email', 'password', 'tokens', 'plates', 'parkedSpaceId'].every(
+  return ['id', 'email', 'tokens', 'plates', 'parkedSpaceId'].every(
     (s) => s in obj
   );
 };

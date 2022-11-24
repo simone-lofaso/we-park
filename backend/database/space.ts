@@ -1,5 +1,5 @@
 import db from '.';
-import type { ParkingSpace } from '../types';
+import type { ParkingSpace } from '../types/database';
 
 const Spaces = {
   /**
