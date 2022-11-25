@@ -15,29 +15,24 @@ export const doRegister = async (
   form: { email: string; password: string },
   navigation: RootStackScreenProps<'Register'>['navigation']
 ) => {
-  try {
-    const res = await fetch(
-      `http://${
-        Constants.expoConfig?.extra?.apiUrl || 'localhost'
-      }:8000/api/v1/user/register`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      }
-    );
+  const res = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/user/register`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    }
+  );
+  if (res.ok) {
     const data = await res.json();
-    if (res.ok) {
-      if (!isUser(data)) throw new Error('Data returned is not a User.');
-      await storeUser(data);
-      navigation.navigate('Home');
-    } else throw new Error(data.message);
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
+    if (!isUser(data)) throw new Error('Data returned is not a User.');
+    await storeUser(data);
+    navigation.navigate('Home');
+  } else handleCodes(res.status);
 };
 
 /**
@@ -66,4 +61,16 @@ export const doLogin = async (
     await storeUser(data);
     navigation.navigate('Home');
   }
+};
+
+/**
+ * Throws the appropriate error based on the status code
+ */
+const handleCodes = (code: number) => {
+  if (code === 409) {
+    throw new Error(
+      'That email already exists! Please try logging in instead.'
+    );
+  }
+  throw new Error('Unknown server error!');
 };
