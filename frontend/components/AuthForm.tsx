@@ -65,6 +65,13 @@ export const AuthForm = ({ formType, navigation }: AuthFormProps) => {
           navigation.navigate(`${other}`);
         }}
       />
+      {/*Debugging only, delete later*/}
+      <Button
+        title={`Go to ScanAI (Debugging)`}
+        onPress={async () => {
+          navigation.navigate(`ScanAI`);
+        }}
+      />
       <Text style={styles.error}>{err}</Text>
     </View>
   );
