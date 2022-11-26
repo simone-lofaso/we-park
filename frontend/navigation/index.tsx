@@ -10,7 +10,8 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
-import { Home, Login, Map, Register, ScanAI, Profile } from '../screens';
+import { Home, Login, Map, Register, ScanAI, Profile} from '../screens';
+import TakePicture from '../screens/TakePicture';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -55,6 +56,11 @@ function RootNavigator() {
       <Stack.Screen
         name='Map'
         component={Map}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='TakePicture'
+        component={TakePicture}
         options={{ headerShown: false }}
       />
       <Stack.Screen

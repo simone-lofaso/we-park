@@ -48,9 +48,9 @@ export const AuthForm = ({ formType, navigation }: AuthFormProps) => {
       />
       {/*Debugging only, delete later*/}
       <Button
-        title={`Go to ScanAI (Debugging)`}
+        title={`Go to TakePicture (Debugging)`}
         onPress={async () => {
-          navigation.navigate(`ScanAI`);
+          navigation.navigate(`TakePicture`);
         }}
       />
     </View>
