@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
       res.status(409).end();
       return;
     }
-    res.status(500).json(e).end();
+    res.status(500).json(e);
   }
 });
 
@@ -33,7 +33,6 @@ router.post('/change-email', async (req, res) => {
   try {
     await UserTable.login(email, password);
     const result = await UserTable.changeEmail(email, newEmail);
-    console.log(result);
     res.status(200).json({ newEmail });
   } catch (e) {
     console.error(e);
@@ -46,7 +45,6 @@ router.post('/change-password', async (req, res) => {
   try {
     await UserTable.login(email, password);
     const result = await UserTable.changePassword(email, newPassword);
-    console.log(result);
     res.status(200).json({ newPassword });
   } catch (e) {
     console.error(e);

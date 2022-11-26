@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Button, TextInputProps, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { doLogin, doRegister } from '../api';
 import { RootStackScreenProps } from '../types';
+import { getUser } from '../util';
 import { Input } from './Input';
 
 type AuthFormProps = {
@@ -10,23 +11,41 @@ type AuthFormProps = {
 };
 
 export const AuthForm = ({ formType, navigation }: AuthFormProps) => {
-  const onPress = () => {
-    if (formType === 'Login') {
-      doLogin(form, navigation as RootStackScreenProps<'Login'>['navigation']);
-    } else {
-      doRegister(
-        form,
-        navigation as RootStackScreenProps<'Register'>['navigation']
-      );
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      if (user) navigation.navigate('Home');
+    })();
+  }, []);
+
+  const onPress = async () => {
+    try {
+      if (formType === 'Login') {
+        await doLogin(
+          form,
+          navigation as RootStackScreenProps<'Login'>['navigation']
+        );
+      } else {
+        await doRegister(
+          form,
+          navigation as RootStackScreenProps<'Register'>['navigation']
+        );
+      }
+    } catch (e) {
+      if (e instanceof Error) {
+        setErr(e.message);
+        return;
+      }
+      throw e;
     }
   };
 
   const other = formType === 'Login' ? 'Register' : 'Login';
-
   const [form, setForm] = useState<{ email: string; password: string }>({
     email: '',
     password: '',
   });
+  const [err, setErr] = useState<string>('');
 
   return (
     <View style={styles.container}>
@@ -53,6 +72,7 @@ export const AuthForm = ({ formType, navigation }: AuthFormProps) => {
           navigation.navigate(`TakePicture`);
         }}
       />
+      <Text style={styles.error}>{err}</Text>
     </View>
   );
 };
@@ -77,5 +97,10 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
+  },
+  error: {
+    color: 'red',
+    fontSize: 20,
+    textAlign: 'center',
   },
 });

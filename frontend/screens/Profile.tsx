@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import { RootStackScreenProps } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteUser } from '../util';
 
 export default function Profile({
   navigation,
@@ -44,6 +45,13 @@ export default function Profile({
         onChangeText={(e) => setPlateNum({ plateNum: e })}
       />
       <Button title='Add Plate' onPress={handleSubmit} />
+      <Button
+        title='Sign Out'
+        onPress={async () => {
+          await deleteUser();
+          navigation.navigate('Login');
+        }}
+      />
     </SafeAreaView>
   );
 }
