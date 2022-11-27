@@ -14,7 +14,10 @@ declare global {
 
 export type RootStackParamList = {
   Register: undefined;
-  ScanAI: undefined;
+  TakePicture: undefined;
+  ScanAI: {
+    Picture: string;
+  };
   Login: undefined;
   Home: undefined;
   Map: {
