@@ -1,17 +1,47 @@
-import { SafeAreaView } from 'react-native';
-import { RootStackScreenProps } from '../../types';
-import { StyleSheet } from 'react-native';
-import CoinCounter from './CoinCounter';
-import { Button } from '../../components'
+import { AntDesign } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Button } from '../../components';
 import { green } from '../../constants/Colors';
+import { RootStackScreenProps, User } from '../../types';
+import { getUser } from '../../util';
+import CoinCounter from './CoinCounter';
 
 // TODO: Real Home screen
 
 export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      if (user) setUser(user);
+    })();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* <CoinCounter style={styles.currentCoins} /> */}
-      <Button text='View Parking'><CoinCounter numberOfCoins={10}/></Button>
+      <View style={styles.nav}>
+        <CoinCounter
+          numberOfCoins={user?.tokens || NaN}
+          style={styles.currentCoins}
+        />
+        <AntDesign
+          name='user'
+          size={45}
+          color='white'
+          onPress={() => navigation.push('Profile')}
+        />
+      </View>
+      <Button text='Start Parking'>
+        <CoinCounter numberOfCoins={-10} />
+      </Button>
+      <Button text='Scan (Parking)'>
+        <CoinCounter numberOfCoins={10} />
+      </Button>
+      <Button text='Scan (Leaving)'>
+        <CoinCounter numberOfCoins={10} />
+      </Button>
       {/* <Button
         title='Go To Recommend'
         onPress={() => {
@@ -30,14 +60,6 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
           });
         }}
       />
-      <Button
-        title='Go To Register'
-        onPress={() => navigation.navigate('Register')}
-      />
-      <Button
-        title='Go To Login'
-        onPress={() => navigation.navigate('Login')}
-      />
       <Button title='Profile' onPress={() => navigation.navigate('Profile')} /> */}
     </SafeAreaView>
   );
@@ -45,12 +67,18 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     backgroundColor: green,
     flex: 1,
+    justifyContent: 'center',
   },
-  currentCoins: {
+  currentCoins: {},
+  nav: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
     position: 'absolute',
     right: 0,
     top: 0,
-  }
+  },
 });

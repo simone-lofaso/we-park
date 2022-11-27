@@ -9,8 +9,9 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 20,
     backgroundColor: 'white',
-    fontSize: 30,
+    fontSize: 25,
     margin: 10,
+    padding: 4,
     textAlign: 'center',
     width: 0.8 * width,
   },

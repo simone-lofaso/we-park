@@ -1,4 +1,4 @@
-import { Button } from '@rneui/themed';
+import { Button } from '../../components/';
 import Constants from 'expo-constants';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -69,16 +69,10 @@ export default function SingleInputForm({
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Input placeholder={placeHolder} onChangeText={(e) => setInput(e)} />
-      <Button title='Submit' onPress={handleSubmit} />
+      <Button text='Submit' onPress={handleSubmit} />
       <Text>{err}</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    margin: 10,
-  },
-});

@@ -1,32 +1,54 @@
-import { ReactNode } from 'react'
-import { Pressable, PressableProps, StyleSheet, View } from 'react-native'
-import { Text } from './Text'
+import { ReactNode } from 'react';
+import {
+  Pressable,
+  PressableAndroidRippleConfig,
+  PressableProps,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { Text } from './Text';
 
-type ButtonProps = {
-  text: string
-} & PressableProps
+export type ButtonProps = {
+  text: string;
+  buttonHeight?: number;
+} & PressableProps;
 
-export const Button = ({ children, text, ...props }: ButtonProps) => {
-
+export const Button = ({
+  children,
+  text,
+  buttonHeight,
+  ...props
+}: ButtonProps) => {
   return (
-    <Pressable style={styles.button} {...props}>
-      <Text style={styles.text}>{text}</Text>
-      {children as ReactNode}
-    </Pressable>
-  )
-}
+    <View style={styles.container}>
+      <Pressable android_ripple={rippleConfig} style={styles.button} {...props}>
+        <Text style={styles.text}>{text}</Text>
+        {children as ReactNode}
+      </Pressable>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
+    alignSelf: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    width: '80%',
+  },
+  container: {
     backgroundColor: '#45B499',
     borderRadius: 20,
-    flexDirection: 'row',
-    height: 60,
-    justifyContent: 'center',
-    width: '80%'
+    margin: 10,
+    overflow: 'hidden',
   },
   text: {
-    fontSize: 30
-  }
-})
+    fontSize: 25,
+  },
+});
+
+const rippleConfig: PressableAndroidRippleConfig = {
+  color: 'white',
+};
