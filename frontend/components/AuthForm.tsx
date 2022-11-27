@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button } from '@rneui/themed';
+import { StyleSheet, Text, View } from 'react-native';
 import { doLogin, doRegister } from '../api';
 import { RootStackScreenProps } from '../types';
 import { getUser } from '../util';
@@ -13,8 +14,7 @@ type AuthFormProps = {
 export const AuthForm = ({ formType, navigation }: AuthFormProps) => {
   useEffect(() => {
     (async () => {
-      const user = await getUser();
-      if (user) navigation.navigate('Home');
+      if (await getUser()) navigation.navigate('Home');
     })();
   }, []);
 

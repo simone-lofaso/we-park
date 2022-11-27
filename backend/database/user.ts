@@ -37,17 +37,17 @@ const UserTable = {
     };
   },
 
-  changeEmail: (email: string, newEmail: string) => {
-    return asyncQuery(`UPDATE users SET email = ? WHERE email = ?`, [
+  changeEmail: (id: number, newEmail: string) => {
+    return asyncQuery(`UPDATE users SET email = ? WHERE id = ?`, [
       newEmail,
-      email,
+      id,
     ]);
   },
 
-  changePassword: (email: string, newPassword: string) => {
+  changePassword: (id: number, newPassword: string) => {
     return asyncQuery(
-      `UPDATE users        SET password = ?        WHERE email = ?`,
-      [newPassword, email]
+      `UPDATE users        SET password = ?        WHERE id = ?`,
+      [newPassword, id]
     );
   },
 
@@ -84,6 +84,11 @@ const UserTable = {
       userId,
     ]);
   },
+
+  delete: (id: number) => {
+    return asyncQuery(`DELETE FROM users WHERE id=?`, [id]);
+  },
+
   execute: db.execute,
 };
 

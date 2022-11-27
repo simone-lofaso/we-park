@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { RootStackScreenProps } from '../types';
 import { green } from '../constants/Colors';
-import { AuthForm } from '../components/AuthForm';
+import { AuthForm } from '../components';
 
 export default function Login({ navigation }: RootStackScreenProps<'Login'>) {
   return (

@@ -1,7 +1,5 @@
-import { Dimensions, StyleSheet, TextInput } from 'react-native';
-import type { TextInputProps } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
+import { StyleSheet, TextInput, TextInputProps } from 'react-native';
+import { width } from '../constants/Dimensions';
 
 export const Input = (props: TextInputProps) => {
   return <TextInput style={styles.input} {...props} />;

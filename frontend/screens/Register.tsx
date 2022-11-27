@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { AuthForm } from '../components/AuthForm';
+import { AuthForm } from '../components';
 import { green } from '../constants/Colors';
 import { RootStackScreenProps } from '../types';
 

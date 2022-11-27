@@ -29,11 +29,10 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/change-email', async (req, res) => {
-  const { email, password, newEmail } = req.body;
+  const { id, email } = req.body;
   try {
-    await UserTable.login(email, password);
-    const result = await UserTable.changeEmail(email, newEmail);
-    res.status(200).json({ newEmail });
+    await UserTable.changeEmail(id, email);
+    res.status(200).end();
   } catch (e) {
     console.error(e);
     res.status(500).json(e);
@@ -41,11 +40,10 @@ router.post('/change-email', async (req, res) => {
 });
 
 router.post('/change-password', async (req, res) => {
-  const { email, password, newPassword } = req.body;
+  const { id, password } = req.body;
   try {
-    await UserTable.login(email, password);
-    const result = await UserTable.changePassword(email, newPassword);
-    res.status(200).json({ newPassword });
+    await UserTable.changePassword(id, password);
+    res.status(200).end();
   } catch (e) {
     console.error(e);
     res.status(500).json(e);
@@ -53,9 +51,20 @@ router.post('/change-password', async (req, res) => {
 });
 
 router.post('/add-plate', async (req, res) => {
-  const { plateNum, userId } = req.body;
+  const { plateNum, id } = req.body;
   try {
-    UserTable.addLicensePlate(plateNum, userId);
+    await UserTable.addLicensePlate(plateNum, id);
+    res.status(200).end();
+  } catch (e) {
+    console.error(e);
+    res.status(500).json(e);
+  }
+});
+
+router.post('/delete', async (req, res) => {
+  const { id } = req.body;
+  try {
+    await UserTable.delete(id);
     res.status(200).end();
   } catch (e) {
     console.error(e);
