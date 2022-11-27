@@ -1,8 +1,9 @@
 import { StyleSheet, Text as BaseText, TextProps } from 'react-native';
 
-export const Text = ({ children, ...props }: TextProps) => {
+export const Text = ({ children, style, ...props }: TextProps) => {
+
   return (
-    <BaseText {...props} style={styles.text}>
+    <BaseText style={[{...styles.text}, style]} {...props} >
       {children}
     </BaseText>
   );
@@ -15,3 +16,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+

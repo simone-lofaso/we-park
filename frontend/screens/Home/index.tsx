@@ -1,17 +1,18 @@
-import { Button } from '@rneui/themed';
 import { SafeAreaView } from 'react-native';
-import { RootStackScreenProps } from '../types';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-
-const image = { uri: 'https://reactjs.org/logo-og.png' };
-import Splash from '../assets/images/splash.png';
+import { RootStackScreenProps } from '../../types';
+import { StyleSheet } from 'react-native';
+import CoinCounter from './CoinCounter';
+import { Button } from '../../components'
+import { green } from '../../constants/Colors';
 
 // TODO: Real Home screen
 
 export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   return (
-    <SafeAreaView>
-      <Button
+    <SafeAreaView style={styles.container}>
+      {/* <CoinCounter style={styles.currentCoins} /> */}
+      <Button text='View Parking'><CoinCounter numberOfCoins={10}/></Button>
+      {/* <Button
         title='Go To Recommend'
         onPress={() => {
           const parkingSpace = {
@@ -34,24 +35,22 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
         onPress={() => navigation.navigate('Register')}
       />
       <Button
-        title='Go To ScanAI'
-        onPress={() => navigation.navigate('ScanAI')}
-      />
-      <Button
         title='Go To Login'
         onPress={() => navigation.navigate('Login')}
       />
-      <Button title='Profile' onPress={() => navigation.navigate('Profile')} />
+      <Button title='Profile' onPress={() => navigation.navigate('Profile')} /> */}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: green,
     flex: 1,
   },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
+  currentCoins: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  }
 });
