@@ -2,6 +2,9 @@ import Constants from 'expo-constants';
 import type { RootStackScreenProps, User } from '../types';
 import { storeUser } from '../util';
 
+/**
+ * Returns a config with post and content-type application/json.
+ */
 const fetchConfig = (body: any) => {
   return {
     method: 'POST',
@@ -12,6 +15,9 @@ const fetchConfig = (body: any) => {
   };
 };
 
+/**
+ * Checks if the object is a user.
+ */
 const isUser = (obj: any): obj is User => {
   return ['id', 'email', 'tokens', 'plates', 'parkedSpaceId'].every(
     (s) => s in obj
@@ -60,6 +66,9 @@ export const doLogin = async (
   }
 };
 
+/**
+ * Navigates to the reccomendation screen.
+ */
 export const doPark = async (
   user: User,
   navigation: RootStackScreenProps<any>['navigation'],
@@ -88,6 +97,9 @@ export const doPark = async (
   updateUser(id);
 };
 
+/**
+ * Parks a user in the assigned spot.
+ */
 export const finishPark = async (
   id: number,
   spaceId: number,
@@ -114,6 +126,9 @@ const handleCodes = (code: number) => {
   throw new Error('Unknown server error!');
 };
 
+/**
+ * Updates a user's coins. TODO: AI implementation.
+ */
 export const doScan = async (
   id: number,
   tokens: number,
@@ -129,6 +144,9 @@ export const doScan = async (
   await updateUser(id);
 };
 
+/**
+ * Updates a user in async storage.
+ */
 export const updateUser = async (id: number) => {
   const res = await fetch(
     `http://${
@@ -140,6 +158,9 @@ export const updateUser = async (id: number) => {
   storeUser(await res.json());
 };
 
+/**
+ * Clears a parking space.
+ */
 export const leavingSpace = async (spaceId: number) => {
   const res = await fetch(
     `http://${

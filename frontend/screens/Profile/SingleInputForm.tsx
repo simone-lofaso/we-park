@@ -11,6 +11,9 @@ type AddPlateFormProps = {
   navigation: RootStackScreenProps<'Profile'>['navigation'];
 };
 
+/**
+ * Template form with single input field.
+ */
 export default function SingleInputForm({
   type,
   navigation,

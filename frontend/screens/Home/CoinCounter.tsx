@@ -6,6 +6,9 @@ type CoinCounterProps = {
   numberOfCoins: number;
 } & ViewProps;
 
+/**
+ * Displays the coin image and coin count.
+ */
 export default function CoinCounter({
   style,
   numberOfCoins,

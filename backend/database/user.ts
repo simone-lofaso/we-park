@@ -7,6 +7,9 @@ import db from '.';
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { ApiUser } from '../types';
 
+/**
+ * Wraps a query in a promise and returns the result and fields.
+ */
 export const asyncQuery = <T extends QueryResult['result']>(
   query: string,
   values?: any
@@ -22,7 +25,14 @@ export const asyncQuery = <T extends QueryResult['result']>(
     });
   });
 };
+
+/**
+ * Abstraction for the user table.
+ */
 const UserTable = {
+  /**
+   * Gets a user by the id.
+   */
   get: async (id: number) => {
     const { result: user } = await asyncQuery<RowDataPacket[]>(
       `SELECT id, email, tokens FROM users WHERE id=?`,
@@ -42,6 +52,10 @@ const UserTable = {
       parkedSpaceId: parkedSpace[0] ? (parkedSpace[0].id as number) : null,
     };
   },
+
+  /**
+   * Inserts a user into the table and returns it.
+   */
   register: async (email: string, password: string): Promise<ApiUser> => {
     const { result } = await asyncQuery<ResultSetHeader>(
       `INSERT INTO users(email, password, tokens) values (?,?,10);`,
@@ -56,6 +70,9 @@ const UserTable = {
     };
   },
 
+  /**
+   * Changes a user's email.
+   */
   changeEmail: (id: number, newEmail: string) => {
     return asyncQuery(`UPDATE users SET email = ? WHERE id = ?`, [
       newEmail,
@@ -63,13 +80,19 @@ const UserTable = {
     ]);
   },
 
+  /**
+   * Chages a user's password.
+   */
   changePassword: (id: number, newPassword: string) => {
-    return asyncQuery(
-      `UPDATE users        SET password = ?        WHERE id = ?`,
-      [newPassword, id]
-    );
+    return asyncQuery(`UPDATE users SET password = ? WHERE id = ?`, [
+      newPassword,
+      id,
+    ]);
   },
 
+  /**
+   * Gets a user based on their email and password.
+   */
   login: async (email: string, password: string): Promise<ApiUser> => {
     const { result: user } = await asyncQuery<RowDataPacket[]>(
       `SELECT id, email, tokens FROM users WHERE email = '${email}' AND password = '${password}'`
@@ -88,15 +111,10 @@ const UserTable = {
       parkedSpaceId: parkedSpace[0] ? (parkedSpace[0].id as number) : null,
     };
   },
+
   /**
-   * User end needs floor/row/section, db uses some specific id to track space status in backend
+   * Adds a license plate to the user.
    */
-  park: (userId: number, id: number) => {
-    return asyncQuery('UPDATE spaces set `parkedUserId` = ? where `id` = ?', [
-      userId,
-      id,
-    ]);
-  },
   addLicensePlate: (plateNum: string, userId: number) => {
     return asyncQuery('INSERT INTO plates(plateNum, userId) VALUES (?, ?)', [
       plateNum,
@@ -104,13 +122,19 @@ const UserTable = {
     ]);
   },
 
+  /**
+   * Deletes a user from the db.
+   */
   delete: (id: number) => {
     return asyncQuery(`DELETE FROM users WHERE id=?`, [id]);
   },
+
+  /**
+   * Updates a user's tokens.
+   */
   updateCoins: async (id: number, newCoins: number) => {
     return asyncQuery(`UPDATE users SET tokens=? WHERE id=?`, [newCoins, id]);
   },
-  execute: db.execute,
 };
 
 export default UserTable;

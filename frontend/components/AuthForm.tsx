@@ -11,6 +11,9 @@ type AuthFormProps = {
   navigation: RootStackScreenProps<'Login' | 'Register'>['navigation'];
 };
 
+/**
+ * Template form for authentication (login/register)
+ */
 export const AuthForm = ({ formType, navigation }: AuthFormProps) => {
   useEffect(() => {
     (async () => {

@@ -9,6 +9,9 @@ import { RootStackScreenProps, User } from '../../types';
 import { getUser } from '../../util';
 import CoinCounter from './CoinCounter';
 
+/**
+ * Home screen
+ */
 export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   const [user, setUser] = useState<User>();
   const [parked, setParked] = useState<boolean>(false);

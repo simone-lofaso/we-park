@@ -13,6 +13,9 @@ export type ButtonProps = {
   buttonHeight?: number;
 } & PressableProps;
 
+/**
+ * Styled Button.
+ */
 export const Button = ({
   children,
   text,
