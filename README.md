@@ -16,8 +16,10 @@ A parking spot tracker built with [Expo](https://expo.dev/) and [Express](https:
 1. Install the [Expo App](https://expo.dev/client) onto your iOS or Android device.
 2. Clone the project into your preferred projects directory with <code>git clone https://github.com/simone-lofaso/we-park</code>.
 3. Install dependencies. <code>npm install</code> <code>cd backend && npm install</code> <code>cd ../frontend && npm install</code>
-4. In the backend dir, start the server with <code>npm run reset-db</code>, then <code>npm start</code>
-5. Start the frontend in the frontend dir with <code>npm start</code>, and scan the QR using the Expo app, following Expo's instructions.
+4. In the backend dir, <code>cp .env.tpl .env</code> and fill them with your favorite db host, pass, etc. for IPHOST, use your local ipv4.
+5. In the frontend dir, <code>touch .env</code> and fill in the first line with API_URL=yourIPV4.
+6. In the backend dir, start the server with <code>npm run reset-db</code>, then <code>npm start</code>
+7. Start the frontend in the frontend dir with <code>npm start</code>, and scan the QR using the Expo app, following Expo's instructions.
 
 ## How to Contribute
 
