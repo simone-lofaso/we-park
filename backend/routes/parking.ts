@@ -17,4 +17,10 @@ router.post('/parked', async (req, res) => {
   res.status(200).end();
 });
 
+router.post('/leaving', async (req, res) => {
+  const { spaceId } = req.body;
+  await Spaces.clearSpot(spaceId);
+  res.status(200).end();
+});
+
 export default router;

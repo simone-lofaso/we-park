@@ -2,8 +2,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { doPark } from '../../api';
-import { Button, Text } from '../../components';
+import { doPark, leavingSpace } from '../../api';
+import { Button } from '../../components';
 import { green } from '../../constants/Colors';
 import { RootStackScreenProps, User } from '../../types';
 import { getUser } from '../../util';
@@ -11,11 +11,14 @@ import CoinCounter from './CoinCounter';
 
 export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   const [user, setUser] = useState<User>();
+  const [parked, setParked] = useState<boolean>(false);
   const isLoading = useIsFocused();
   useEffect(() => {
     (async () => {
       const user = await getUser();
-      if (user) setUser(user);
+      if (!user) return;
+      setUser(user);
+      if (user.parkedSpaceId) setParked(true);
     })();
   }, [isLoading]);
 
@@ -28,6 +31,11 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   const scanParkingPress = async () => {
     if (!user) return;
     navigation.navigate('TakePicture');
+  };
+
+  const leaving = async () => {
+    if (!user || user.parkedSpaceId === null) return;
+    setParked(!(await leavingSpace(user.parkedSpaceId)));
   };
 
   return (
@@ -44,16 +52,20 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
           onPress={() => navigation.push('Profile')}
         />
       </View>
-      <Button text='Start Parking' onPress={startParkingPress}>
-        <CoinCounter numberOfCoins={-10} />
-      </Button>
-      <Button text='Scan (Parking)' onPress={scanParkingPress}>
-        <CoinCounter numberOfCoins={10} />
-      </Button>
-      <View>
-        <Button text={"I'm Leaving!"} />
-      </View>
-      <Text>{JSON.stringify(user)}</Text>
+      {parked ? (
+        <>
+          <Button text='Scan (Parking)' onPress={scanParkingPress}>
+            <CoinCounter numberOfCoins={10} />
+          </Button>
+          <View>
+            <Button text={"I'm Leaving!"} onPress={leaving} />
+          </View>
+        </>
+      ) : (
+        <Button text='Start Parking' onPress={startParkingPress}>
+          <CoinCounter numberOfCoins={-10} />
+        </Button>
+      )}
     </SafeAreaView>
   );
 }

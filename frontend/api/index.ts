@@ -127,7 +127,6 @@ export const doScan = async (
   );
   if (!ok) throw new Error((await json()).message);
   await updateUser(id);
-  navigation.navigate('TakePicture');
 };
 
 export const updateUser = async (id: number) => {
@@ -139,4 +138,14 @@ export const updateUser = async (id: number) => {
   );
   if (!res.ok) throw new Error('Oops');
   storeUser(await res.json());
+};
+
+export const leavingSpace = async (spaceId: number) => {
+  const res = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/parking/leaving`,
+    fetchConfig({ spaceId })
+  );
+  return res.ok;
 };

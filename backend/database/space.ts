@@ -19,6 +19,11 @@ const Spaces = {
       spaceId,
     ]);
   },
+  clearSpot: async (spaceId: number) => {
+    await asyncQuery(`UPDATE spaces SET parkedUserId=NULL where id=?`, [
+      spaceId,
+    ]);
+  },
 };
 
 export default Spaces;
