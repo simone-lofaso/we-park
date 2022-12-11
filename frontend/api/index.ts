@@ -62,13 +62,17 @@ export const doLogin = async (
 
 export const doPark = async (
   user: User,
-  navigation: RootStackScreenProps<any>['navigation']
+  navigation: RootStackScreenProps<any>['navigation'],
+  cost: number
 ) => {
   const { id, tokens } = user;
-  // const { ok, json } = await fetch(`http://${
-  //   Constants.expoConfig?.extra?.apiUrl || 'localhost'
-  //   }:8000/api/v1/user/update-coins`, fetchConfig({ id, tokens }))
-  // if (!ok) throw new Error((await json()).message);
+  const { ok, json } = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/user/update-coins`,
+    fetchConfig({ id, tokens: tokens - cost })
+  );
+  if (!ok) throw new Error((await json()).message);
   const res = await fetch(
     `http://${
       Constants.expoConfig?.extra?.apiUrl || 'localhost'
@@ -81,7 +85,7 @@ export const doPark = async (
     parkingSpace,
     garageName,
   });
-  return;
+  updateUser(id);
 };
 
 export const finishPark = async (
@@ -108,4 +112,31 @@ const handleCodes = (code: number) => {
     );
   }
   throw new Error('Unknown server error!');
+};
+
+export const doScan = async (
+  id: number,
+  tokens: number,
+  navigation: RootStackScreenProps<any>['navigation']
+) => {
+  const { ok, json } = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/user/update-coins`,
+    fetchConfig({ id, tokens: tokens + 10 })
+  );
+  if (!ok) throw new Error((await json()).message);
+  await updateUser(id);
+  navigation.navigate('TakePicture');
+};
+
+export const updateUser = async (id: number) => {
+  const res = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/user/get`,
+    fetchConfig({ id })
+  );
+  if (!res.ok) throw new Error('Oops');
+  storeUser(await res.json());
 };

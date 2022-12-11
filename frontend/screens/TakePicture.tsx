@@ -1,16 +1,24 @@
 import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useRef } from 'react';
-import { Image } from 'react-native';
-import { RootStackScreenProps } from '../types';
+import { doScan } from '../api';
+import { RootStackScreenProps, User } from '../types';
+import { getUser } from '../util';
 
 export default function TakePicture({
   navigation,
 }: RootStackScreenProps<'TakePicture'>) {
   const [type, setType] = useState(CameraType.back);
+  const [user, setUser] = useState<User>();
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const ref = useRef<Camera>(null);
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      if (user) setUser(user);
+    })();
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -38,11 +46,12 @@ export default function TakePicture({
 
   // Take the picture
   async function snapPhoto() {
+    if (!user) return;
     console.log('Taking picture');
     if (ref != null && ref.current != null) {
-      const photo = await ref.current.takePictureAsync();
-      console.debug(photo);
-      navigation.navigate('ScanAI', { Picture: photo.uri });
+      // const photo = await ref.current.takePictureAsync();
+      await doScan(user.id, user.tokens, navigation);
+      navigation.navigate('Home');
     }
   }
 

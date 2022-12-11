@@ -23,6 +23,25 @@ export const asyncQuery = <T extends QueryResult['result']>(
   });
 };
 const UserTable = {
+  get: async (id: number) => {
+    const { result: user } = await asyncQuery<RowDataPacket[]>(
+      `SELECT id, email, tokens FROM users WHERE id=?`,
+      [id]
+    );
+    const { result: plates } = await asyncQuery<RowDataPacket[]>(
+      `SELECT * FROM plates WHERE userId=?`,
+      [(user[0] as RowDataPacket).id]
+    );
+    const { result: parkedSpace } = await asyncQuery<RowDataPacket[]>(
+      `SELECT id FROM spaces WHERE parkedUserId=?`,
+      [(user[0] as RowDataPacket).id]
+    );
+    return {
+      ...(user[0] as Omit<User, 'password'>),
+      plates: plates as Plate[],
+      parkedSpaceId: parkedSpace[0] ? (parkedSpace[0].id as number) : null,
+    };
+  },
   register: async (email: string, password: string): Promise<ApiUser> => {
     const { result } = await asyncQuery<ResultSetHeader>(
       `INSERT INTO users(email, password, tokens) values (?,?,10);`,
@@ -89,7 +108,7 @@ const UserTable = {
     return asyncQuery(`DELETE FROM users WHERE id=?`, [id]);
   },
   updateCoins: async (id: number, newCoins: number) => {
-    return asyncQuery(`UPDATE users SET tokens=? WHERE id=?`, [id, newCoins]);
+    return asyncQuery(`UPDATE users SET tokens=? WHERE id=?`, [newCoins, id]);
   },
   execute: db.execute,
 };
