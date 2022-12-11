@@ -1,22 +1,32 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { RootStackScreenProps } from '../types';
+import { RootStackScreenProps, User } from '../types';
 import { Button, Text } from '@rneui/themed';
+import { finishPark } from '../api';
+import { useEffect, useState } from 'react';
+import { getUser } from '../util';
 
 export default function Map({
   navigation,
   route,
 }: RootStackScreenProps<'Map'>) {
-  const { floor } = route.params.parkingSpace;
-  const { garageName } = route.params;
+  const { parkingSpace, garageName } = route.params;
+  const [user, setUser] = useState<User>();
 
   const handlePark = async () => {
-    // TODO: connect api route to parking
-    navigation.navigate('Home');
+    if (!user) return;
+    await finishPark(user.id, parkingSpace.garageId, navigation);
   };
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      if (user) setUser(user);
+    })();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>{`Please park on floor ${floor} in garage ${garageName}`}</Text>
+      <Text>{`Please park on floor ${parkingSpace.floor} in garage ${garageName}`}</Text>
       <Button title='I Parked!' onPress={handlePark} />
     </SafeAreaView>
   );

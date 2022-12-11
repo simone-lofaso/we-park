@@ -2,6 +2,16 @@ import Constants from 'expo-constants';
 import type { RootStackScreenProps, User } from '../types';
 import { storeUser } from '../util';
 
+const fetchConfig = (body: any) => {
+  return {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+};
+
 const isUser = (obj: any): obj is User => {
   return ['id', 'email', 'tokens', 'plates', 'parkedSpaceId'].every(
     (s) => s in obj
@@ -19,13 +29,7 @@ export const doRegister = async (
     `http://${
       Constants.expoConfig?.extra?.apiUrl || 'localhost'
     }:8000/api/v1/user/register`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    }
+    fetchConfig(form)
   );
   if (res.ok) {
     const data = await res.json();
@@ -46,14 +50,7 @@ export const doLogin = async (
     `http://${
       Constants.expoConfig?.extra?.apiUrl || 'localhost'
     }:8000/api/v1/user/login`,
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    }
+    fetchConfig(form)
   );
   const data = await res.json();
   if (res.ok) {
@@ -61,6 +58,44 @@ export const doLogin = async (
     await storeUser(data);
     navigation.navigate('Home');
   }
+};
+
+export const doPark = async (
+  user: User,
+  navigation: RootStackScreenProps<any>['navigation']
+) => {
+  const { id, tokens } = user;
+  // const { ok, json } = await fetch(`http://${
+  //   Constants.expoConfig?.extra?.apiUrl || 'localhost'
+  //   }:8000/api/v1/user/update-coins`, fetchConfig({ id, tokens }))
+  // if (!ok) throw new Error((await json()).message);
+  const res = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/parking/recommend`,
+    fetchConfig({ id })
+  );
+  if (!res.ok) throw new Error((await res.json()).message);
+  const { space: parkingSpace, name: garageName } = await res.json();
+  navigation.navigate('Map', {
+    parkingSpace,
+    garageName,
+  });
+  return;
+};
+
+export const finishPark = async (
+  id: number,
+  spaceId: number,
+  navigation: RootStackScreenProps<any>['navigation']
+) => {
+  const res = await fetch(
+    `http://${
+      Constants.expoConfig?.extra?.apiUrl || 'localhost'
+    }:8000/api/v1/parking/parked`,
+    fetchConfig({ id, spaceId })
+  );
+  if (res.ok) navigation.navigate('Home');
 };
 
 /**

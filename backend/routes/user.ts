@@ -72,4 +72,14 @@ router.post('/delete', async (req, res) => {
   }
 });
 
+router.post('/update-coins', async (req, res) => {
+  const { id, tokens } = req.body;
+  try {
+    await UserTable.updateCoins(id, tokens);
+    res.status(200).end();
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
 export default router;

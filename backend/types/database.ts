@@ -24,7 +24,7 @@ export type ParkingSpace = {
   row: number;
   section: string;
   garageId: number;
-  parkedUserId: number;
+  parkedUserId?: number;
 };
 
 /**

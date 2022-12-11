@@ -7,7 +7,7 @@ import db from '.';
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { ApiUser } from '../types';
 
-const asyncQuery = <T extends QueryResult['result']>(
+export const asyncQuery = <T extends QueryResult['result']>(
   query: string,
   values?: any
 ): Promise<QueryResult<T>> => {
@@ -88,7 +88,9 @@ const UserTable = {
   delete: (id: number) => {
     return asyncQuery(`DELETE FROM users WHERE id=?`, [id]);
   },
-
+  updateCoins: async (id: number, newCoins: number) => {
+    return asyncQuery(`UPDATE users SET tokens=? WHERE id=?`, [id, newCoins]);
+  },
   execute: db.execute,
 };
 

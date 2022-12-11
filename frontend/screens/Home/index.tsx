@@ -1,16 +1,21 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { doPark } from '../../api';
 import { Button } from '../../components';
 import { green } from '../../constants/Colors';
 import { RootStackScreenProps, User } from '../../types';
 import { getUser } from '../../util';
 import CoinCounter from './CoinCounter';
 
-// TODO: Real Home screen
-
 export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   const [user, setUser] = useState<User>();
+
+  const startParkingPress = async () => {
+    if (!user) return;
+    if (user.tokens < 10) return;
+    await doPark(user, navigation);
+  };
 
   useEffect(() => {
     (async () => {
@@ -33,7 +38,7 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
           onPress={() => navigation.push('Profile')}
         />
       </View>
-      <Button text='Start Parking'>
+      <Button text='Start Parking' onPress={startParkingPress}>
         <CoinCounter numberOfCoins={-10} />
       </Button>
       <Button text='Scan (Parking)'>
@@ -42,25 +47,6 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
       <Button text='Scan (Leaving)'>
         <CoinCounter numberOfCoins={10} />
       </Button>
-      {/* <Button
-        title='Go To Recommend'
-        onPress={() => {
-          const parkingSpace = {
-            // TODO: replace with api call to db to get available space
-            id: 1,
-            floor: 1,
-            row: 1,
-            section: 'A',
-            garageId: 1,
-          };
-          const garageName = 'North Garage'; // TODO: replace with api call to get garagename
-          navigation.navigate('Map', {
-            parkingSpace,
-            garageName,
-          });
-        }}
-      />
-      <Button title='Profile' onPress={() => navigation.navigate('Profile')} /> */}
     </SafeAreaView>
   );
 }
