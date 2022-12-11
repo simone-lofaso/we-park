@@ -33,7 +33,7 @@ export default function SingleInputForm({
       return {
         suffix: 'change-password',
         key: 'password',
-        placeHolder: 'New Email',
+        placeHolder: 'New Password',
       };
     throw new Error('Type not defined.');
   })();

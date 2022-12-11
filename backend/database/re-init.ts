@@ -85,7 +85,7 @@ db.query(
   (1, 1, 'A', null, 1)`
 );
 
-db.query(`INSERT INTO USERS VALUES(1, 'test@email.com', 'pass123', 3)`);
+db.query(`INSERT INTO USERS VALUES(1, 'test@email.com', 'pass123', 10)`);
 
 db.end((err) => {
   if (err) console.error(err);

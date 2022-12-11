@@ -94,7 +94,7 @@ export const doPark = async (
     parkingSpace,
     garageName,
   });
-  updateUser(id);
+  await updateUser(id);
 };
 
 /**
@@ -111,7 +111,10 @@ export const finishPark = async (
     }:8000/api/v1/parking/parked`,
     fetchConfig({ id, spaceId })
   );
-  if (res.ok) navigation.navigate('Home');
+  if (res.ok) {
+    await updateUser(id);
+    navigation.navigate('Home');
+  }
 };
 
 /**

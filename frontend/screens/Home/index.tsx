@@ -2,8 +2,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { doPark, leavingSpace } from '../../api';
-import { Button } from '../../components';
+import { doPark, leavingSpace, updateUser } from '../../api';
+import { Button, Text } from '../../components';
 import { green } from '../../constants/Colors';
 import { RootStackScreenProps, User } from '../../types';
 import { getUser } from '../../util';
@@ -18,10 +18,15 @@ export default function Home({ navigation }: RootStackScreenProps<'Home'>) {
   const isLoading = useIsFocused();
   useEffect(() => {
     (async () => {
-      const user = await getUser();
+      let user = await getUser();
       if (!user) return;
+      await updateUser(user.id);
+      user = await getUser();
+      if (!user) return;
+      console.log(user);
       setUser(user);
       if (user.parkedSpaceId) setParked(true);
+      else setParked(false);
     })();
   }, [isLoading]);
 
